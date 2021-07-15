@@ -58,7 +58,7 @@ public class JSONEditor {
                 int z = 1;
                 JSONObject jsonObjectX = (JSONObject) jsonObjectY.get(xName +x);
                 while (jsonObjectX.get(zName + z) != null){
-                    images.add(new Image(x, y+1, z, (String) jsonObjectX.get(zName + z)));
+                    images.add(new Image(x-1, y, z-1, (String) jsonObjectX.get(zName + z)));
                     z++;
                 }
                 x++;

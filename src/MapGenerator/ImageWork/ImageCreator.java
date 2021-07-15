@@ -1,7 +1,6 @@
 package MapGenerator.ImageWork;
 
 import MapGenerator.Configurations;
-import MapGenerator.ImageCombining;
 import MapGenerator.JSONWork.JSONEditor;
 import MapGenerator.Placement.FirstLayerLine;
 import MapGenerator.Placement.LayerAnalyst;
@@ -15,7 +14,7 @@ import java.io.IOException;
 import java.util.Iterator;
 import java.util.Set;
 
-public class ImageCreator implements ImageCombining {
+public class ImageCreator {
 
     private File combineImages(Set<Image> images, Set<FirstLayerLine> lines, int sizeX, int sizeY, int sizeZ, ImageFormat imageFormat){
 

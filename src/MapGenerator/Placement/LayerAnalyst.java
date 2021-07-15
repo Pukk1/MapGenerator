@@ -1,6 +1,6 @@
 package MapGenerator.Placement;
 
-import GifLibrary.ImageWork.*;
+import MapGenerator.ImageWork.Image;
 
 import java.util.HashSet;
 import java.util.Iterator;
