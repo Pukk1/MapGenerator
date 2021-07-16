@@ -14,7 +14,7 @@ import java.util.Set;
 
 public class MapGenerator {
     public static void main(String [] args){
-        File file = new File("D:\\programs\\Java\\projects\\GifCreator\\src\\Test2.json");
+        File file = new File("D:\\programs\\Java\\projects\\MapGenerator\\src\\MapGenerator\\Test2.json");
         FileReader fileReader = null;
         BufferedReader bufferedReader = null;
         try {

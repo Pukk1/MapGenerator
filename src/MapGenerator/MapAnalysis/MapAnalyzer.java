@@ -10,7 +10,7 @@ public class MapAnalyzer {
 
         findMaxSizes(images, mapData);
 
-        creatSizeUnit(mapData.getX(), mapData.getY(), pixSizeX, pixSizeY, mapData);
+        creatSizeUnit(mapData.getXSize(), mapData.getYSize(), pixSizeX, pixSizeY, mapData);
 
         return mapData;
     }
@@ -22,8 +22,12 @@ public class MapAnalyzer {
         else {
             outMapData.setNeedFinishResize(true);
         }
+
         outMapData.setSizeUnitW(pixSizeX/(meshSizeX*Configurations.mapFormatX));
         outMapData.setSizeUnitH(pixSizeY/(mashSizeY*Configurations.mapFormatY));
+
+        outMapData.createPixSizeCell();
+
     }
 
     private void findMaxSizes(Set<Image> images, MapData outMapData){
@@ -43,8 +47,8 @@ public class MapAnalyzer {
             }
         }
 
-        outMapData.setX(maxX);
-        outMapData.setY(maxY);
-        outMapData.setZ(maxZ);
+        outMapData.setXSize(maxX+1);
+        outMapData.setYSize(maxY+1);
+        outMapData.setZSize(maxZ+1);
     }
 }

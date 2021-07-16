@@ -1,57 +1,62 @@
 package MapGenerator.MapAnalysis;
 
+import MapGenerator.Configurations;
+
 public class MapData {
-    private int x = 0;
-    private int y = 0;
-    private int z = 0;
+    private int xSize = 0;
+    private int ySize = 0;
+    private int zSize = 0;
     private int pixSizeX = 0;
     private int pixSizeY = 0;
 
-    private int SizeUnitW = 0;  //размер на карте абстрактный и задаётся единицей размера, которой соответствует какое-то количество пикселей
-    private int SizeUnitH = 0;  //по задумке SizeUnitW и SizeUnitH должный быть равны
+    private int sizeUnitW = 0;  //размер на карте абстрактный и задаётся единицей размера, которой соответствует какое-то количество пикселей
+    private int sizeUnitH = 0;  //по задумке SizeUnitW и SizeUnitH должный быть равны
 
     //для красивого отображения размеры карты должны быть в отношении H/W = 4/8
 
+    private int pixSizeCellW = 0;  //размер одной клетки на карте в pix
+    private int pixSizeCellH = 0;
+
     private boolean needFinishResize = false;
 
-    public void setZ(int z) {
-        this.z = z;
+    public void setZSize(int zSize) {
+        this.zSize = zSize;
     }
 
-    public void setY(int y) {
-        this.y = y;
+    public void setYSize(int ySize) {
+        this.ySize = ySize;
     }
 
-    public void setX(int x) {
-        this.x = x;
+    public void setXSize(int xSize) {
+        this.xSize = xSize;
     }
 
-    public int getZ() {
-        return z;
+    public int getzSize() {
+        return zSize;
     }
 
-    public int getY() {
-        return y;
+    public int getYSize() {
+        return ySize;
     }
 
-    public int getX() {
-        return x;
+    public int getXSize() {
+        return xSize;
     }
 
     public void setSizeUnitH(int sizeUnitH) {
-        SizeUnitH = sizeUnitH;
+        this.sizeUnitH = sizeUnitH;
     }
 
     public void setSizeUnitW(int sizeUnitW) {
-        SizeUnitW = sizeUnitW;
+        this.sizeUnitW = sizeUnitW;
     }
 
     public int getSizeUnitH() {
-        return SizeUnitH;
+        return sizeUnitH;
     }
 
     public int getSizeUnitW() {
-        return SizeUnitW;
+        return sizeUnitW;
     }
 
     public void setNeedFinishResize(boolean needFinishResize) {
@@ -76,5 +81,18 @@ public class MapData {
 
     public int getPixSizeY() {
         return pixSizeY;
+    }
+
+    public void createPixSizeCell(){
+        pixSizeCellW = sizeUnitW* Configurations.mapFormatX;
+        pixSizeCellH = sizeUnitH* Configurations.mapFormatY;
+    }
+
+    public int getPixSizeCellH() {
+        return pixSizeCellH;
+    }
+
+    public int getPixSizeCellW() {
+        return pixSizeCellW;
     }
 }
