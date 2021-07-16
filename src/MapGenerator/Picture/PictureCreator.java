@@ -28,10 +28,24 @@ public class PictureCreator {
     public File createMapPicture(Set<Image> images, MapData mapData){
         BufferedImage mapPicture = creatBufferedImage(mapData);
 
+        BufferedImage bufferedImage = null;
+
         try {
             createFirstLayer(mapPicture, mapData, images);
+            bufferedImage = ImageIO.read(new File("здание.png"));
         } catch (IOException e) {
             System.out.println("Problem with first layer creating");
+            e.printStackTrace();
+        }
+
+        bufferedImage = resize(bufferedImage, bufferedImage.getWidth()/10, bufferedImage.getHeight()/10);
+
+
+        addPictureToMap(mapPicture, bufferedImage, new Image(1, 1, 0, "здание.png"), mapData);
+
+        try {
+            ImageIO.write(mapPicture, "png", new File("main.png"));
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
@@ -56,11 +70,11 @@ public class PictureCreator {
             }
         }
 
-        try {
-            ImageIO.write(mapPicture, "png", new File("main.png"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            ImageIO.write(mapPicture, "png", new File("main.png"));
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
 
     }
 
@@ -72,6 +86,8 @@ public class PictureCreator {
 //        int x = (int) (image.getX() * mapData.getSizeUnitW()*(mapData.getCellW()/2 + Configurations.curvatureX) + image.getY()*mapData.getSizeUnitW()*(mapData.getCellW()/2 - Configurations.curvatureX));
 //        int y = mapPicture.getHeight()/2 + image.getY() * mapData.getSizeUnitH()*3 - image.getX()*mapData.getSizeUnitH()*3 - addedImage.getHeight(null)/2;
 
+        int x = image.getX() * mapData.getSizeUnitW()*10 + image.getY()*mapData.getSizeUnitW()*8;
+        int y = mapPicture.getHeight()/9*4 + image.getY() * mapData.getSizeUnitH()*5 - image.getX()*mapData.getSizeUnitH()*4 - addedImage.getHeight(null)/9*4;
 
         graphics2D.drawImage(addedImage, x, y, null);
     }

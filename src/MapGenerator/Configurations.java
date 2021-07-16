@@ -20,7 +20,7 @@ public class Configurations {
     public static int mapFormatY = 9;
 
     public static float curvatureX = 1.0f;        //съезд относительно ровного ромба в сторону
-    public static float curvatureY = 1.5f;   //съезд относительно ровного ромба в сторону
+    public static float curvatureY = 0.5f;   //съезд относительно ровного ромба в сторону
 
     public static Color maskColor = Color.WHITE;
 }
