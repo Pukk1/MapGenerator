@@ -37,7 +37,7 @@ public class MapGenerator {
         }
 
         MapGenerator mapGenerator = new MapGenerator();
-        mapGenerator.generateMap(jSONString, 1600, 800);
+        mapGenerator.generateMap(jSONString, 1800, 900);
     }
 
     public void generateMap(String jSON, int pixSizeX, int pixSizeY){

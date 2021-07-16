@@ -17,6 +17,9 @@ public class MapData {
     private int pixSizeCellW = 0;  //размер одной клетки на карте в pix
     private int pixSizeCellH = 0;
 
+    private int cellW = 0;  //размер одной клетки в unit
+    private int cellH = 0;
+
     private boolean needFinishResize = false;
 
     public void setZSize(int zSize) {
@@ -94,5 +97,21 @@ public class MapData {
 
     public int getPixSizeCellW() {
         return pixSizeCellW;
+    }
+
+    public void setCellH(int cellH) {
+        this.cellH = cellH;
+    }
+
+    public void setCellW(int cellW) {
+        this.cellW = cellW;
+    }
+
+    public int getCellH() {
+        return cellH;
+    }
+
+    public int getCellW() {
+        return cellW;
     }
 }

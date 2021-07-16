@@ -26,6 +26,9 @@ public class MapAnalyzer {
         outMapData.setSizeUnitW(pixSizeX/(meshSizeX*Configurations.mapFormatX));
         outMapData.setSizeUnitH(pixSizeY/(mashSizeY*Configurations.mapFormatY));
 
+        outMapData.setCellW(pixSizeX/(meshSizeX*outMapData.getSizeUnitW()));
+        outMapData.setCellH(pixSizeY/(mashSizeY*outMapData.getSizeUnitH()));
+
         outMapData.createPixSizeCell();
 
     }

@@ -69,21 +69,27 @@ public class PictureCreator {
 
         Graphics2D graphics2D = (Graphics2D) mapPicture.getGraphics();
 
-        int x = image.getX() * mapData.getSizeUnitW()*5 + image.getY()*mapData.getSizeUnitW()*3;
-        int y = mapPicture.getHeight()/2 + image.getY() * mapData.getSizeUnitH()*2 - image.getX()*mapData.getSizeUnitH()*2 - addedImage.getHeight(null)/2;
+//        int x = (int) (image.getX() * mapData.getSizeUnitW()*(mapData.getCellW()/2 + Configurations.curvatureX) + image.getY()*mapData.getSizeUnitW()*(mapData.getCellW()/2 - Configurations.curvatureX));
+//        int y = mapPicture.getHeight()/2 + image.getY() * mapData.getSizeUnitH()*3 - image.getX()*mapData.getSizeUnitH()*3 - addedImage.getHeight(null)/2;
+
+
         graphics2D.drawImage(addedImage, x, y, null);
     }
 
     private BufferedImage createCellShape(BufferedImage addedPicture, MapData mapData){
         java.awt.Image image = null;
-        if(Configurations.mapFormatX/Configurations.mapFormatY == 2) {
 
-            if(Configurations.drawBorders){
-                createBorders(addedPicture, mapData);
-            }
-
-            createMaskZones(addedPicture, mapData);
+        if(Configurations.drawBorders){
+            createBorders(addedPicture, mapData);
         }
+
+        createMaskZones(addedPicture, mapData);
+
+//        try {
+//            ImageIO.write(addedPicture, "png", new File("ggg.png"));
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
 
         return addedPicture;
     }
@@ -93,14 +99,14 @@ public class PictureCreator {
 
         graphics2D.setColor(Configurations.bordersColor);
 
-        graphics2D.fill(new Polygon(new int[]{0, mapData.getPixSizeCellW()/Configurations.mapFormatX*5, mapData.getPixSizeCellW()/Configurations.mapFormatX*5 + Configurations.borderSize, 0 + Configurations.borderSize},
-                new int[]{addedPicture.getHeight() / 2 , 0, 0, addedPicture.getHeight() / 2}, 4));
-        graphics2D.fill(new Polygon(new int[]{0, mapData.getPixSizeCellW()/Configurations.mapFormatX*3, mapData.getPixSizeCellW()/Configurations.mapFormatX*3 + Configurations.borderSize, 0 + Configurations.borderSize},
-                new int[]{addedPicture.getHeight() / 2 , addedPicture.getHeight(), addedPicture.getHeight(), addedPicture.getHeight() / 2}, 4));
-        graphics2D.fill(new Polygon(new int[]{mapData.getPixSizeCellW()/Configurations.mapFormatX*5 - Configurations.borderSize, mapData.getPixSizeCellW()/Configurations.mapFormatX*5, addedPicture.getWidth(), addedPicture.getWidth()-Configurations.borderSize},
-                new int[]{0 , 0, addedPicture.getHeight()/2, addedPicture.getHeight() / 2}, 4));
-        graphics2D.fill(new Polygon(new int[]{mapData.getPixSizeCellW()/Configurations.mapFormatX*3 - Configurations.borderSize, mapData.getPixSizeCellW()/Configurations.mapFormatX*3, addedPicture.getWidth(), addedPicture.getWidth()-Configurations.borderSize},
-                new int[]{addedPicture.getHeight() , addedPicture.getHeight(), addedPicture.getHeight()/2, addedPicture.getHeight() / 2}, 4));
+        graphics2D.fill(new Polygon(new int[]{0, (int) (mapData.getPixSizeCellW()/Configurations.mapFormatX*(mapData.getCellW()/2.0+Configurations.curvatureX)), (int) (mapData.getPixSizeCellW()/Configurations.mapFormatX*(mapData.getCellW()/2.0+Configurations.curvatureX) + Configurations.borderSize), Configurations.borderSize},
+                new int[]{addedPicture.getHeight() / mapData.getCellH() * (int)(mapData.getCellH()/2.0-Configurations.curvatureY) , 0, 0, addedPicture.getHeight() / mapData.getCellH() * (int)(mapData.getCellH()/2.0-Configurations.curvatureY) }, 4));
+        graphics2D.fill(new Polygon(new int[]{0, (int) (mapData.getPixSizeCellW()/Configurations.mapFormatX*(mapData.getCellW()/2.0 - Configurations.curvatureX)), (int) (mapData.getPixSizeCellW()/Configurations.mapFormatX*(mapData.getCellW()/2.0 - Configurations.curvatureX) + Configurations.borderSize), Configurations.borderSize},
+                new int[]{addedPicture.getHeight() / mapData.getCellH() * (int)(mapData.getCellH()/2.0-Configurations.curvatureY) , addedPicture.getHeight(), addedPicture.getHeight(), addedPicture.getHeight() / mapData.getCellH() * (int)(mapData.getCellH()/2.0-Configurations.curvatureY)}, 4));
+        graphics2D.fill(new Polygon(new int[]{(int) (mapData.getPixSizeCellW()/Configurations.mapFormatX*(mapData.getCellW()/2.0+Configurations.curvatureX)) -Configurations.borderSize, (int) (mapData.getPixSizeCellW()/Configurations.mapFormatX*(mapData.getCellW()/2.0+Configurations.curvatureX)), addedPicture.getWidth(), addedPicture.getWidth()-Configurations.borderSize},
+                new int[]{0 , 0, addedPicture.getHeight() / mapData.getCellH() * (int)(mapData.getCellH()/2.0+Configurations.curvatureY) , addedPicture.getHeight() / mapData.getCellH() * (int)(mapData.getCellH()/2.0+Configurations.curvatureY) }, 4));
+        graphics2D.fill(new Polygon(new int[]{(int) (mapData.getPixSizeCellW()/Configurations.mapFormatX*(mapData.getCellW()/2.0 - Configurations.curvatureX)) - Configurations.borderSize, (int) (mapData.getPixSizeCellW()/Configurations.mapFormatX*(mapData.getCellW()/2.0 - Configurations.curvatureX)), addedPicture.getWidth(), addedPicture.getWidth()-Configurations.borderSize},
+                new int[]{addedPicture.getHeight() , addedPicture.getHeight(), addedPicture.getHeight() / mapData.getCellH() * (int)(mapData.getCellH()/2.0+Configurations.curvatureY), addedPicture.getHeight() / mapData.getCellH() * (int)(mapData.getCellH()/2.0+Configurations.curvatureY)}, 4));
         
     }
 
@@ -108,17 +114,17 @@ public class PictureCreator {
         Graphics2D graphics2D = (Graphics2D) addedPicture.getGraphics();
 
         graphics2D.setColor(Configurations.maskColor);
-        Shape shape = new Polygon(new int[]{0, 0, mapData.getPixSizeCellW()/Configurations.mapFormatX*5},
-                new int[]{0, addedPicture.getHeight() / 2, 0}, 3);
+        Shape shape = new Polygon(new int[]{0, 0, (int) (mapData.getPixSizeCellW()/Configurations.mapFormatX*(mapData.getCellW()/2.0+Configurations.curvatureX))},
+                new int[]{0, addedPicture.getHeight() / mapData.getCellH() * (int)(mapData.getCellH()/2.0-Configurations.curvatureY), 0}, 3);
         graphics2D.fill(shape);
-        shape = new Polygon(new int[]{0, 0, mapData.getPixSizeCellW()/Configurations.mapFormatX*3},
-                new int[]{addedPicture.getHeight(), addedPicture.getHeight() / 2, addedPicture.getHeight()}, 3);
+        shape = new Polygon(new int[]{0, 0, (int) (mapData.getPixSizeCellW()/Configurations.mapFormatX*(mapData.getCellW()/2.0 - Configurations.curvatureX))},
+                new int[]{addedPicture.getHeight(), addedPicture.getHeight() / mapData.getCellH() * (int)(mapData.getCellH()/2.0-Configurations.curvatureY), addedPicture.getHeight()}, 3);
         graphics2D.fill(shape);
-        shape = new Polygon(new int[]{addedPicture.getWidth(), addedPicture.getWidth(), mapData.getPixSizeCellW()/Configurations.mapFormatX*5},
-                new int[]{0, addedPicture.getHeight() / 2, 0}, 3);
+        shape = new Polygon(new int[]{addedPicture.getWidth(), addedPicture.getWidth(), (int) (mapData.getPixSizeCellW()/Configurations.mapFormatX*(mapData.getCellW()/2.0+Configurations.curvatureX))},
+                new int[]{0, addedPicture.getHeight() / mapData.getCellH() * (int)(mapData.getCellH()/2.0+Configurations.curvatureY), 0}, 3);
         graphics2D.fill(shape);
-        shape = new Polygon(new int[]{addedPicture.getWidth(), addedPicture.getWidth(), mapData.getPixSizeCellW()/Configurations.mapFormatX*3},
-                new int[]{addedPicture.getHeight(), addedPicture.getHeight() / 2, addedPicture.getHeight()}, 3);
+        shape = new Polygon(new int[]{addedPicture.getWidth(), addedPicture.getWidth(), (int) (mapData.getPixSizeCellW()/Configurations.mapFormatX*(mapData.getCellW()/2.0 - Configurations.curvatureX))},
+                new int[]{addedPicture.getHeight(), addedPicture.getHeight() / mapData.getCellH() * (int)(mapData.getCellH()/2.0+Configurations.curvatureY), addedPicture.getHeight()}, 3);
         graphics2D.fill(shape);
     }
 
