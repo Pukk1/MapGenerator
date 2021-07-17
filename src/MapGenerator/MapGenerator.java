@@ -40,7 +40,7 @@ public class MapGenerator {
         mapGenerator.generateMap(jSONString, 1250, 550);
     }
 
-    public void generateMap(String jSON, int pixSizeX, int pixSizeY){
+    public File generateMap(String jSON, int pixSizeX, int pixSizeY){
 
         pixSizeX = 1250;
         pixSizeY = 550;
@@ -55,6 +55,8 @@ public class MapGenerator {
         mapData.setPixSizeY(pixSizeY);
 
         PictureCreator pictureCreator = new PictureCreator();
-        pictureCreator.createMapPicture(images, mapData);
+        File mapPictureFile = pictureCreator.createMapPicture(images, mapData);
+
+        return mapPictureFile;
     }
 }
