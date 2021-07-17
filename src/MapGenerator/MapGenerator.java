@@ -37,10 +37,14 @@ public class MapGenerator {
         }
 
         MapGenerator mapGenerator = new MapGenerator();
-        mapGenerator.generateMap(jSONString, 1800, 900);
+        mapGenerator.generateMap(jSONString, 1250, 550);
     }
 
     public void generateMap(String jSON, int pixSizeX, int pixSizeY){
+
+        pixSizeX = 1250;
+        pixSizeY = 550;
+
         JSONEditor jsonEditor = new JSONEditor();
         Set<Image> images = jsonEditor.createImagesArray(jSON);
 

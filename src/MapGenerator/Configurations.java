@@ -16,11 +16,11 @@ public class Configurations {
     public static Color bordersColor = Color.GRAY;
     public static int borderSize = 2;
 
-    public static int mapFormatX = 18;
-    public static int mapFormatY = 9;
+    public static int mapFormatX = 25;
+    public static int mapFormatY = 11;
 
-    public static float curvatureX = 1.0f;        //съезд относительно ровного ромба в сторону
-    public static float curvatureY = 0.5f;   //съезд относительно ровного ромба в сторону
+    public static float curvatureX = -0.5f;        //съезд относительно ровного ромба в сторону
+    public static float curvatureY = 0;   //съезд относительно ровного ромба в сторону
 
     public static Color maskColor = Color.WHITE;
 }
