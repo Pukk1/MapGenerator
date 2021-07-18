@@ -21,13 +21,13 @@
 
     "x4": {
 
-      "z1": "phon.png"
+      "z1": "phon.png","z2": "6.png"
 
     },
 
     "x5": {
 
-      "z1": "phon.png"
+      "z1": "phon.png","z2": "5.png", "z3": "4.png"
 
     }
   },
@@ -42,24 +42,24 @@
 
     "x2": {
 
-      "z1": "phon.png"
+      "z1": "phon.png","z2": "6.png"
 
     },
     "x3": {
 
-      "z1": "phon.png"
+      "z1": "phon.png","z2": "7.png"
 
     },
 
     "x4": {
 
-      "z1": "phon.png"
+      "z1": "phon.png","z2": "8.png"
 
     },
 
     "x5": {
 
-      "z1": "phon.png"
+      "z1": "phon.png","z2": "5.png"
 
     }
   },
@@ -68,13 +68,13 @@
 
     "x1": {
 
-      "z1": "phon.png"
+      "z1": "phon.png","z2": "9.png"
 
     },
 
     "x2": {
 
-      "z1": "phon.png"
+      "z1": "phon.png","z2": "9.png"
 
     },
     "x3": {
@@ -91,7 +91,7 @@
 
     "x5": {
 
-      "z1": "phon.png"
+      "z1": "phon.png","z2": "5.png"
 
     }
   },
@@ -123,7 +123,7 @@
 
     "x5": {
 
-      "z1": "phon.png"
+      "z1": "phon.png","z2": "5.png"
 
     }
   },
@@ -132,30 +132,30 @@
 
     "x1": {
 
-      "z1": "phon.png"
+      "z1": "phon.png","z2": "5.png"
 
     },
 
     "x2": {
 
-      "z1": "phon.png"
+      "z1": "phon.png","z2": "5.png"
 
     },
     "x3": {
 
-      "z1": "phon.png"
+      "z1": "phon.png","z2": "5.png"
 
     },
 
     "x4": {
 
-      "z1": "phon.png"
+      "z1": "phon.png","z2": "5.png"
 
     },
 
     "x5": {
 
-      "z1": "phon.png"
+      "z1": "phon.png","z2": "5.png"
 
     }
   }
