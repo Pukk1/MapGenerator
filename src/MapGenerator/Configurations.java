@@ -14,7 +14,13 @@ public class Configurations {
 
     public static boolean drawBorders = true;
     public static Color bordersColor = Color.GRAY;
+    public static int borderSize = 2;
 
-    public static int mapFormatX = 8;
-    public static int mapFormatY = 4;
+    public static int mapFormatX = 26;
+    public static int mapFormatY = 12;
+
+    public static float curvatureX = -1;        //съезд относительно ровного ромба в сторону
+    public static float curvatureY = 0;   //съезд относительно ровного ромба в сторону
+
+    public static Color maskColor = Color.WHITE;
 }

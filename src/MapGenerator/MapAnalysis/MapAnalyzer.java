@@ -10,7 +10,7 @@ public class MapAnalyzer {
 
         findMaxSizes(images, mapData);
 
-        creatSizeUnit(mapData.getX(), mapData.getY(), pixSizeX, pixSizeY, mapData);
+        creatSizeUnit(mapData.getXSize(), mapData.getYSize(), pixSizeX, pixSizeY, mapData);
 
         return mapData;
     }
@@ -22,8 +22,41 @@ public class MapAnalyzer {
         else {
             outMapData.setNeedFinishResize(true);
         }
-        outMapData.setSizeUnitW(pixSizeX/(meshSizeX*Configurations.mapFormatX));
-        outMapData.setSizeUnitH(pixSizeY/(mashSizeY*Configurations.mapFormatY));
+
+//        outMapData.setSizeUnitW(pixSizeX/(meshSizeX*Configurations.mapFormatX));
+//        outMapData.setSizeUnitH(pixSizeY/(mashSizeY*Configurations.mapFormatY));
+
+//        pixSizeX = closestResolution(pixSizeX, Configurations.mapFormatX);
+//        pixSizeY = closestResolution(pixSizeY, Configurations.mapFormatY);
+
+        System.out.println(pixSizeX + " " + pixSizeY);
+
+        if(pixSizeX/(meshSizeX*Configurations.mapFormatX) > pixSizeY/(mashSizeY*Configurations.mapFormatY)){
+            outMapData.setSizeUnitW(pixSizeY/(mashSizeY*Configurations.mapFormatY));
+            outMapData.setSizeUnitH(pixSizeY/(mashSizeY*Configurations.mapFormatY));
+        }
+        else {
+            outMapData.setSizeUnitW(pixSizeX/(meshSizeX*Configurations.mapFormatX));
+            outMapData.setSizeUnitH(pixSizeX/(meshSizeX*Configurations.mapFormatX));
+        }
+
+//        outMapData.setCellW(pixSizeX/(meshSizeX*outMapData.getSizeUnitW()));
+//        outMapData.setCellH(pixSizeY/(mashSizeY*outMapData.getSizeUnitH()));
+
+        outMapData.setCellW(Configurations.mapFormatX);
+        outMapData.setCellH(Configurations.mapFormatY);
+
+        outMapData.createPixSizeCell();
+
+    }
+
+    private int closestResolution(int sizeX, int sizeInUnits){
+        for(int i = sizeX; i > 0; i--){
+            if((i%sizeInUnits == 0) & (i/sizeInUnits%2 == 0)){
+                return i;
+            }
+        }
+        return 0;
     }
 
     private void findMaxSizes(Set<Image> images, MapData outMapData){
@@ -43,8 +76,8 @@ public class MapAnalyzer {
             }
         }
 
-        outMapData.setX(maxX);
-        outMapData.setY(maxY);
-        outMapData.setZ(maxZ);
+        outMapData.setXSize(maxX+1);
+        outMapData.setYSize(maxY+1);
+        outMapData.setZSize(maxZ+1);
     }
 }
