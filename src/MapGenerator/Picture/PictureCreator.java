@@ -10,7 +10,8 @@ import java.awt.*;
 import java.awt.image.*;
 import java.io.File;
 import java.io.IOException;
-import java.util.Set;
+import java.util.*;
+import java.util.List;
 
 public class PictureCreator {
 
@@ -37,7 +38,7 @@ public class PictureCreator {
 
         creatObjects(mapPicture, mapData, images);
 
-        mapPicture = createPictureFormat(mapPicture, mapData.getPixSizeX(), mapData.getPixSizeY());
+//        mapPicture = createPictureFormat(mapPicture, mapData.getPixSizeX(), mapData.getPixSizeY());
 
         return mapPicture;
     }
@@ -50,12 +51,25 @@ public class PictureCreator {
         return result;
     }
 
-    private void creatObjects(BufferedImage mapPicture, MapData mapData, Set<Image> images){
-        for(Image image : images){
+    private void creatObjects(BufferedImage mapPicture, MapData mapData, Set<Image> imagesSet){
+
+        List<Image> imagesList = new ArrayList<>();
+
+        imagesList.addAll(imagesSet);
+
+        Collections.sort(imagesList);
+
+
+        for(Image image : imagesList){
+
             if(image.getZ() != 0){
+
                 try {
                     BufferedImage bufferedImage = ImageIO.read(new File(image.getPath()));
-                    bufferedImage = resize(bufferedImage, bufferedImage.getWidth()/5, bufferedImage.getHeight()/5);
+
+                    int sizeKof = bufferedImage.getHeight()/mapData.getPixSizeCellH();
+
+                    bufferedImage = resize(bufferedImage, bufferedImage.getWidth()*2/sizeKof, bufferedImage.getHeight()*2/sizeKof);
                     addPictureToMap(mapPicture, bufferedImage, image, mapData);
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -88,10 +102,8 @@ public class PictureCreator {
 
         Graphics2D graphics2D = (Graphics2D) mapPicture.getGraphics();
 
-//        System.out.println(mapData.getSizeUnitW());
-
         //почему это работает правильно науке пока что не известно
-        int x = (int) (image.getX() * (mapData.getSizeUnitW()*13 -2) + image.getY()*mapData.getSizeUnitW()*13 + mapData.getPixSizeCellW()/2.0-addedPicture.getWidth()/2.0);
+        int x = (int) (image.getX() * (mapData.getSizeUnitW()*13 -2) + image.getY()*mapData.getSizeUnitW()*13 + mapData.getPixSizeCellW()/2.0-addedPicture.getWidth()/2.0 +3);
         int y = (int) (mapPicture.getHeight()/10*5 + image.getY() * mapData.getSizeUnitH()*6 - (image.getX()*(mapData.getSizeUnitH()*6)) - addedPicture.getHeight()/2);
 
 

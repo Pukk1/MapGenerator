@@ -40,7 +40,7 @@ public class MapGenerator {
         }
 
         MapGenerator mapGenerator = new MapGenerator();
-        mapGenerator.generateMap(jSONString, 1250, 550);
+        mapGenerator.generateMap(jSONString, 1300, 600);
     }
 
     public File generateMap(String jSON, int pixSizeX, int pixSizeY){

@@ -29,7 +29,6 @@ public class MapAnalyzer {
 //        pixSizeX = closestResolution(pixSizeX, Configurations.mapFormatX);
 //        pixSizeY = closestResolution(pixSizeY, Configurations.mapFormatY);
 
-        System.out.println(pixSizeX + " " + pixSizeY);
 
         if(pixSizeX/(meshSizeX*Configurations.mapFormatX) > pixSizeY/(mashSizeY*Configurations.mapFormatY)){
             outMapData.setSizeUnitW(pixSizeY/(mashSizeY*Configurations.mapFormatY));

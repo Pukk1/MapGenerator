@@ -1,6 +1,6 @@
 package MapGenerator.ImageWork;
 
-public class Image {
+public class Image implements Comparable<Image>{
     private int y;
     private int x;
     private int z;
@@ -43,5 +43,53 @@ public class Image {
 
     public void setZ(int z) {
         this.z = z;
+    }
+
+//    @Override
+//    public int compareTo(Object o) {
+//        Image image2 = (Image) o;
+//
+//        if(image2.getZ() > this.getZ()){
+//            System.out.println("ttt");
+//            return -3;
+//        }
+//        if(image2.getX() > this.getX()){
+//            System.out.println("ttt");
+//            return 2;
+//        }
+//        if(image2.getY() < this.getY()){
+//            System.out.println("ttt");
+//
+//            return 1;
+//        }
+//
+//        return 0;
+//    }
+
+    @Override
+    public int compareTo(Image o) {
+
+        if(o.getX() > this.getX()){
+            return 1;
+        }
+        if(o.getX() < this.getX()){
+            return -1;
+        }
+
+        if(o.getZ() < this.getZ()){
+            return 1;
+        }
+        if(o.getZ() > this.getZ()){
+            return -1;
+        }
+
+        if(o.getY() < this.getY()){
+            return 1;
+        }
+        if(o.getY() > this.getY()){
+            return -1;
+        }
+
+        return 0;
     }
 }
