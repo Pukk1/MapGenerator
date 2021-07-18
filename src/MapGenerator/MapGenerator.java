@@ -7,9 +7,12 @@ import MapGenerator.MapAnalysis.MapAnalyzer;
 import MapGenerator.MapAnalysis.MapData;
 import MapGenerator.Picture.PictureCreator;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.io.IOException;
 import java.util.Set;
 
 public class MapGenerator {
@@ -42,9 +45,6 @@ public class MapGenerator {
 
     public File generateMap(String jSON, int pixSizeX, int pixSizeY){
 
-        pixSizeX = 1250;
-        pixSizeY = 550;
-
         JSONEditor jsonEditor = new JSONEditor();
         Set<Image> images = jsonEditor.createImagesArray(jSON);
 
@@ -55,7 +55,15 @@ public class MapGenerator {
         mapData.setPixSizeY(pixSizeY);
 
         PictureCreator pictureCreator = new PictureCreator();
-        File mapPictureFile = pictureCreator.createMapPicture(images, mapData);
+        BufferedImage mapPicture = pictureCreator.createMapPicture(images, mapData);
+
+        File mapPictureFile = new File("main.png");
+
+        try {
+            ImageIO.write(mapPicture, "png", mapPictureFile);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         return mapPictureFile;
     }

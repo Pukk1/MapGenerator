@@ -25,62 +25,29 @@ public class PictureCreator {
         return dimg;
     }
 
-    public File createMapPicture(Set<Image> images, MapData mapData){
+    public BufferedImage createMapPicture(Set<Image> images, MapData mapData){
         BufferedImage mapPicture = creatBufferedImage(mapData);
-
-        BufferedImage bufferedImage = null;
 
         try {
             createFirstLayer(mapPicture, mapData, images);
-            creatObjects(mapPicture, mapData, images);
         } catch (IOException e) {
             System.out.println("Problem with first layer creating");
             e.printStackTrace();
         }
 
-//        try {
-//            BufferedImage bufferedImage1 = ImageIO.read(new File("png\\7.png"));
-//            bufferedImage1 = resize(bufferedImage1, bufferedImage1.getWidth()/5, bufferedImage1.getHeight()/5);
-//            Image image = new Image(0, 0, 1, "png\\7.png");
-////            int x = (int) (image.getX() * mapData.getSizeUnitW()*12 + image.getY()*mapData.getSizeUnitW()*13) + mapData.getPixSizeCellW()/2-bufferedImage1.getWidth()/2;
-////            int y = (int) (mapPicture.getHeight()/10*5 + image.getY() * mapData.getSizeUnitH()*5.5f - image.getX()*mapData.getSizeUnitH()*5.5f  - bufferedImage1.getHeight()/2);
-////
-////            System.out.println(x + " " + y);
-//            addGrassToMap(mapPicture, bufferedImage1, image, mapData);
-//
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
+        creatObjects(mapPicture, mapData, images);
 
-//        try {
-//            BufferedImage bufferedImage1 = ImageIO.read(new File("png\\8.png"));
-//            bufferedImage1 = resize(bufferedImage1, bufferedImage1.getWidth()/5, bufferedImage1.getHeight()/5);
-//            addGrassToMap(mapPicture, bufferedImage1, new Image(2, 2, 1, "png\\8.png"), mapData);
-//
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//
-//        try {
-//            BufferedImage bufferedImage1 = ImageIO.read(new File("png\\9.png"));
-//            bufferedImage1 = resize(bufferedImage1, bufferedImage1.getWidth()/5, bufferedImage1.getHeight()/5);
-//            addGrassToMap(mapPicture, bufferedImage1, new Image(1, 1, 1, "png\\9.png"), mapData);
-//
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
+        mapPicture = createPictureFormat(mapPicture, mapData.getPixSizeX(), mapData.getPixSizeY());
 
-//        mapPicture = resize(mapPicture, mapPicture.getWidth()/3, mapPicture.getHeight()/3);
+        return mapPicture;
+    }
 
-        File file = new File("main.png");
+    private BufferedImage createPictureFormat(BufferedImage original, int xSize, int ySize){
+        BufferedImage result = new BufferedImage(xSize, ySize, original.getType());
+        Graphics2D graphics2D = (Graphics2D) result.getGraphics();
+        graphics2D.drawImage(original, result.getWidth()/2 - original.getWidth()/2, result.getHeight()/2 - original.getHeight()/2, null);
 
-        try {
-            ImageIO.write(mapPicture, "png", file);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return file;
+        return result;
     }
 
     private void creatObjects(BufferedImage mapPicture, MapData mapData, Set<Image> images){
@@ -121,11 +88,12 @@ public class PictureCreator {
 
         Graphics2D graphics2D = (Graphics2D) mapPicture.getGraphics();
 
-//        int x = (int) (image.getX() * mapData.getSizeUnitW()*(mapData.getCellW()/2 + Configurations.curvatureX) + image.getY()*mapData.getSizeUnitW()*(mapData.getCellW()/2 - Configurations.curvatureX));
-//        int y = mapPicture.getHeight()/2 + image.getY() * mapData.getSizeUnitH()*3 - image.getX()*mapData.getSizeUnitH()*3 - addedImage.getHeight(null)/2;
+//        System.out.println(mapData.getSizeUnitW());
 
-        int x = (int) (image.getX() * mapData.getSizeUnitW()*12 + image.getY()*mapData.getSizeUnitW()*13) + mapData.getPixSizeCellW()/2-addedPicture.getWidth()/2;
-        int y = (int) (mapPicture.getHeight()/10*5 + image.getY() * mapData.getSizeUnitH()*5.5f - image.getX()*mapData.getSizeUnitH()*5.5f - addedPicture.getHeight()/2);
+        //почему это работает правильно науке пока что не известно
+        int x = (int) (image.getX() * (mapData.getSizeUnitW()*13 -2) + image.getY()*mapData.getSizeUnitW()*13 + mapData.getPixSizeCellW()/2.0-addedPicture.getWidth()/2.0);
+        int y = (int) (mapPicture.getHeight()/10*5 + image.getY() * mapData.getSizeUnitH()*6 - (image.getX()*(mapData.getSizeUnitH()*6)) - addedPicture.getHeight()/2);
+
 
         graphics2D.drawImage(addedImage, x, y, null);
     }
@@ -139,12 +107,6 @@ public class PictureCreator {
 
         createMaskZones(addedPicture, mapData);
 
-        try {
-            ImageIO.write(addedPicture, "png", new File("ggg.png"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
         return addedPicture;
     }
 
@@ -153,31 +115,31 @@ public class PictureCreator {
 
         graphics2D.setColor(Configurations.bordersColor);
 
-        graphics2D.fill(new Polygon(new int[]{0, (int) (mapData.getPixSizeCellW()/Configurations.mapFormatX*(mapData.getCellW()/2.0+Configurations.curvatureX)), (int) (mapData.getPixSizeCellW()/Configurations.mapFormatX*(mapData.getCellW()/2.0+Configurations.curvatureX) + Configurations.borderSize), Configurations.borderSize},
+        graphics2D.fill(new Polygon(new int[]{0, (int) (addedPicture.getWidth()/2+Configurations.curvatureX), (int) ((addedPicture.getWidth()/2+Configurations.curvatureX) + Configurations.borderSize), Configurations.borderSize},
                 new int[]{(int)(addedPicture.getHeight()/2 - Configurations.curvatureY) , 0, 0, (int)(addedPicture.getHeight()/2 - Configurations.curvatureY) }, 4));
-        graphics2D.fill(new Polygon(new int[]{0, (int) (mapData.getPixSizeCellW()/Configurations.mapFormatX*(mapData.getCellW()/2.0 - Configurations.curvatureX)), (int) (mapData.getPixSizeCellW()/Configurations.mapFormatX*(mapData.getCellW()/2.0 - Configurations.curvatureX) + Configurations.borderSize), Configurations.borderSize},
+        graphics2D.fill(new Polygon(new int[]{0, (int) (addedPicture.getWidth()/2 - Configurations.curvatureX), (int) ((addedPicture.getWidth()/2 - Configurations.curvatureX) + Configurations.borderSize), Configurations.borderSize},
                 new int[]{(int)(addedPicture.getHeight()/2 - Configurations.curvatureY) , addedPicture.getHeight(), addedPicture.getHeight(), (int)(addedPicture.getHeight()/2 - Configurations.curvatureY)}, 4));
-        graphics2D.fill(new Polygon(new int[]{(int) (mapData.getPixSizeCellW()/Configurations.mapFormatX*(mapData.getCellW()/2.0+Configurations.curvatureX)) -Configurations.borderSize, (int) (mapData.getPixSizeCellW()/Configurations.mapFormatX*(mapData.getCellW()/2.0+Configurations.curvatureX)), addedPicture.getWidth(), addedPicture.getWidth()-Configurations.borderSize},
+        graphics2D.fill(new Polygon(new int[]{(int) (addedPicture.getWidth()/2+Configurations.curvatureX) -Configurations.borderSize, (int) (addedPicture.getWidth()/2+Configurations.curvatureX), addedPicture.getWidth(), addedPicture.getWidth()-Configurations.borderSize},
                 new int[]{0 , 0, (int)(addedPicture.getHeight()/2 - Configurations.curvatureY) , (int)(addedPicture.getHeight()/2 - Configurations.curvatureY) }, 4));
-        graphics2D.fill(new Polygon(new int[]{(int) (mapData.getPixSizeCellW()/Configurations.mapFormatX*(mapData.getCellW()/2.0 - Configurations.curvatureX)) - Configurations.borderSize, (int) (mapData.getPixSizeCellW()/Configurations.mapFormatX*(mapData.getCellW()/2.0 - Configurations.curvatureX)), addedPicture.getWidth(), addedPicture.getWidth()-Configurations.borderSize},
+        graphics2D.fill(new Polygon(new int[]{(int) (addedPicture.getWidth()/2 - Configurations.curvatureX) - Configurations.borderSize, (int) (addedPicture.getWidth()/2 - Configurations.curvatureX), addedPicture.getWidth(), addedPicture.getWidth()-Configurations.borderSize},
                 new int[]{addedPicture.getHeight() , addedPicture.getHeight(), (int)(addedPicture.getHeight()/2 - Configurations.curvatureY), (int)(addedPicture.getHeight()/2 - Configurations.curvatureY)}, 4));
-        
+
     }
 
     private void createMaskZones(BufferedImage addedPicture, MapData mapData){
         Graphics2D graphics2D = (Graphics2D) addedPicture.getGraphics();
 
         graphics2D.setColor(Configurations.maskColor);
-        Shape shape = new Polygon(new int[]{0, 0, (int) (mapData.getPixSizeCellW()/Configurations.mapFormatX*(mapData.getCellW()/2.0+Configurations.curvatureX))},
+        Shape shape = new Polygon(new int[]{0, 0, (int) (addedPicture.getWidth()/2+Configurations.curvatureX)},
                 new int[]{0, (int)(addedPicture.getHeight()/2 - Configurations.curvatureY), 0}, 3);
         graphics2D.fill(shape);
-        shape = new Polygon(new int[]{0, 0, (int) (mapData.getPixSizeCellW()/Configurations.mapFormatX*(mapData.getCellW()/2.0 - Configurations.curvatureX))},
+        shape = new Polygon(new int[]{0, 0, (int) (addedPicture.getWidth()/2 - Configurations.curvatureX)},
                 new int[]{addedPicture.getHeight(), (int)(addedPicture.getHeight()/2 - Configurations.curvatureY), addedPicture.getHeight()}, 3);
         graphics2D.fill(shape);
-        shape = new Polygon(new int[]{addedPicture.getWidth(), addedPicture.getWidth(), (int) (mapData.getPixSizeCellW()/Configurations.mapFormatX*(mapData.getCellW()/2.0+Configurations.curvatureX))},
+        shape = new Polygon(new int[]{addedPicture.getWidth(), addedPicture.getWidth(), (int) (addedPicture.getWidth()/2+Configurations.curvatureX)},
                 new int[]{0, (int)(addedPicture.getHeight()/2 - Configurations.curvatureY), 0}, 3);
         graphics2D.fill(shape);
-        shape = new Polygon(new int[]{addedPicture.getWidth(), addedPicture.getWidth(), (int) (mapData.getPixSizeCellW()/Configurations.mapFormatX*(mapData.getCellW()/2.0 - Configurations.curvatureX))},
+        shape = new Polygon(new int[]{addedPicture.getWidth(), addedPicture.getWidth(), (int) (addedPicture.getWidth()/2 - Configurations.curvatureX)},
                 new int[]{addedPicture.getHeight(), (int)(addedPicture.getHeight()/2 - Configurations.curvatureY), addedPicture.getHeight()}, 3);
         graphics2D.fill(shape);
     }
